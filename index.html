@@ -2,118 +2,191 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEM AS MİMARİ | Alüminyum & Cam Sistemleri</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CEM_AS | Alüminyum & Cam Sistemleri</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f4f4; color: #333; }
-        
-        header { background-color: #ff6600; color: white; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        header h1 { font-size: 28px; text-transform: uppercase; letter-spacing: 2px; }
+        :root { --ana: #0f0f0f; --vurgu: #e67e22; --gri: #1e1e1e; --beyaz: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        body { background: var(--ana); color: var(--beyaz); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- ÜST SLIDER (OKLAR BURADA) --- */
-        .slider-container { position: relative; max-width: 1000px; margin: 20px auto; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); background: #000; }
-        .slides { display: none; width: 100%; height: 450px; object-fit: cover; }
-        
-        /* Ok Butonları */
-        .prev, .next { 
-            cursor: pointer; position: absolute; top: 50%; width: auto; 
-            padding: 16px; margin-top: -22px; color: white; font-weight: bold; 
-            font-size: 30px; transition: 0.3s; border-radius: 0 3px 3px 0; 
-            user-select: none; background-color: rgba(0,0,0,0.4); text-decoration: none; z-index: 10;
+        /* HEADER DÜZENİ */
+        nav {
+            padding: 0 5%; background: rgba(0,0,0,0.95);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; height: 80px;
         }
-        .next { right: 0; border-radius: 3px 0 0 3px; }
-        .prev:hover, .next:hover { background-color: #ff6600; }
+        .nano-tetikleyici { font-size: 35px; color: var(--vurgu); cursor: pointer; transition: 0.3s; flex: 1; }
+        .logo { font-weight: 900; font-size: 32px; letter-spacing: 5px; flex: 2; text-align: center; }
+        .logo span { color: var(--vurgu); }
+        .iletisim-sag { flex: 1; text-align: right; font-size: 11px; font-weight: 600; }
+        .iletisim-sag a { color: var(--beyaz); text-decoration: none; }
 
-        /* --- KATEGORİ BUTONLARI --- */
-        .nav-menu { display: flex; justify-content: center; flex-wrap: wrap; background: white; padding: 15px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .nav-btn { background: #333; color: white; border: none; padding: 10px 20px; margin: 5px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; }
-        .nav-btn:hover { background: #ff6600; }
+        /* NANO BANANA ÇALIŞMA ALANI (FULL SCREEN) */
+        #nano-ekran {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; flex-direction: column;
+        }
+        .nano-ust { padding: 15px; background: var(--gri); display: flex; justify-content: space-between; align-items: center; }
+        #montaj-alani { flex: 1; position: relative; overflow: hidden; background: #111; display: flex; justify-content: center; align-items: center; }
+        #musteri-resmi { max-width: 100%; max-height: 100%; object-fit: contain; }
+        #tasinan-model { position: absolute; width: 200px; cursor: move; touch-action: none; z-index: 100; top: 50px; left: 50px; }
+        .nano-alt { padding: 15px; background: var(--gri); border-top: 1px solid #333; }
+        
+        /* STANDART SİTE TASARIMI */
+        .vitrin { position: relative; width: 95%; max-width: 1100px; height: 350px; margin: 20px auto; border-radius: 15px; overflow: hidden; border: 2px solid #333; }
+        .v-img { width: 100%; height: 100%; object-fit: contain; display: none; }
+        .v-img.aktif { display: block; }
 
-        /* --- GALERİ --- */
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
-        .gallery-item { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: 0.3s; display: none; }
-        .gallery-item.active { display: block; }
-        .gallery-item:hover { transform: translateY(-5px); }
-        .gallery-item img { width: 100%; height: 250px; object-fit: cover; display: block; }
-        .gallery-item .info { padding: 15px; text-align: center; font-weight: bold; background: #fff; border-top: 2px solid #ff6600; }
+        .menu { display: flex; justify-content: center; gap: 10px; padding: 20px; background: var(--gri); position: sticky; top: 80px; z-index: 900; }
+        .m-btn { padding: 10px 20px; border: 2px solid var(--vurgu); background: transparent; color: #fff; border-radius: 50px; cursor: pointer; font-size: 11px; font-weight: bold; }
+        .m-btn.active { background: var(--vurgu); }
 
-        footer { background: #333; color: white; text-align: center; padding: 30px; margin-top: 40px; }
-        .whatsapp-btn { background: #25d366; color: white; padding: 12px 25px; text-decoration: none; border-radius: 50px; display: inline-block; margin-top: 15px; font-weight: bold; }
+        .bolum { display: none; padding: 30px 5%; animation: fadeIn 0.5s; }
+        .bolum.aktif { display: block; }
+        .izgara { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .kart { background: #1a1a1a; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
+        .kart img { width: 100%; height: 220px; object-fit: cover; }
+        .kart h3 { padding: 15px; color: var(--vurgu); font-size: 14px; text-align: center; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        footer { text-align: center; padding: 30px; color: #555; font-size: 12px; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>CEM AS MİMARİ</h1>
-    <p>Alüminyum & Cam Sistemleri Uzmanı</p>
-</header>
+    <nav>
+        <input type="file" id="dosya-sec" style="display:none;" accept="image/*" onchange="nanoBaslat(event)">
+        <div class="nano-tetikleyici" onclick="document.getElementById('dosya-sec').click()">
+            <i class="fas fa-plus-circle"></i>
+        </div>
+        <div class="logo">CEM_<span>AS</span></div>
+        <div class="iletisim-sag">
+            <a href="https://instagram.com/cemashatay" target="_blank">@cemashatay</a><br>
+            <a href="tel:05337747684">0533 774 76 84</a>
+        </div>
+    </nav>
 
-<div class="slider-container">
-    <img class="slides" src="korkuluk1.jpg">
-    <img class="slides" src="vitrin1.jpg">
-    <img class="slides" src="dusakabin1.jpg">
-    
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-</div>
+    <div id="nano-ekran">
+        <div class="nano-ust">
+            <span style="color:var(--vurgu); font-weight:900;">NANO BANANA</span>
+            <button onclick="nanoKapat()" style="background:var(--vurgu); color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">KAPAT</button>
+        </div>
+        <div id="montaj-alani">
+            <img id="musteri-resmi" src="">
+            <img id="tasinan-model" src="korkuluk1.jpg">
+        </div>
+        <div class="nano-alt">
+            <div style="margin-bottom:15px; display:flex; align-items:center; gap:10px;">
+                <span style="font-size:12px;">Boyut:</span>
+                <input type="range" min="50" max="1000" value="200" style="flex:1;" oninput="modelBoyut(this.value)">
+            </div>
+            <div style="display:flex; gap:10px; overflow-x:auto;">
+                <img src="korkuluk1.jpg" width="60" height="60" onclick="modelDegis(this.src)" style="border:1px solid #fff; cursor:pointer;">
+                <img src="korkuluk2.jpg" width="60" height="60" onclick="modelDegis(this.src)" style="border:1px solid #fff; cursor:pointer;">
+                <img src="dusakabin1.jpg" width="60" height="60" onclick="modelDegis(this.src)" style="border:1px solid #fff; cursor:pointer;">
+                <img src="pvc1.jpg" width="60" height="60" onclick="modelDegis(this.src)" style="border:1px solid #fff; cursor:pointer;">
+            </div>
+        </div>
+    </div>
 
-<div class="nav-menu">
-    <button class="nav-btn" onclick="filterGallery('hepsi')">HEPSİ</button>
-    <button class="nav-btn" onclick="filterGallery('korkuluk')">KORKULUK</button>
-    <button class="nav-btn" onclick="filterGallery('dusakabin')">DUŞAKABİN</button>
-    <button class="nav-btn" onclick="filterGallery('vitrin')">VİTRİN / CEPHE</button>
-</div>
+    <div class="vitrin">
+        <img src="vitrin1.jpg" class="v-img aktif">
+        <img src="vitrin2.jpg" class="v-img">
+    </div>
 
-<div class="gallery" id="galeri">
-    <div class="gallery-item active korkuluk"><img src="korkuluk1.jpg"><div class="info">Alüminyum Korkuluk Model 1</div></div>
-    <div class="gallery-item active korkuluk"><img src="korkuluk2.jpg"><div class="info">Camlı Korkuluk Sistemleri</div></div>
-    
-    <div class="gallery-item active dusakabin"><img src="dusakabin1.jpg"><div class="info">Siyah Profil Duşakabin</div></div>
-    <div class="gallery-item active dusakabin"><img src="dusakabin2.jpg"><div class="info">Lüks Cam Duşakabin</div></div>
+    <div class="menu">
+        <button class="m-btn active" onclick="sekmeAc('korkuluk', this)">Korkuluk</button>
+        <button class="m-btn" onclick="sekmeAc('dusakabin', this)">Duşakabin</button>
+        <button class="m-btn" onclick="sekmeAc('pvc', this)">PVC & Cam</button>
+    </div>
 
-    <div class="gallery-item active vitrin"><img src="vitrin1.jpg"><div class="info">Dükkan Vitrin Tasarımı</div></div>
-</div>
+    <div id="korkuluk" class="bolum aktif">
+        <div class="izgara">
+            <div class="kart"><img src="korkuluk1.jpg"><h3>MODEL 01</h3></div>
+            <div class="kart"><img src="korkuluk2.jpg"><h3>MODEL 02</h3></div>
+            <div class="kart"><img src="korkuluk3.jpg"><h3>MODEL 03</h3></div>
+            <div class="kart"><img src="korkuluk4.jpg"><h3>MODEL 04</h3></div>
+            <div class="kart"><img src="korkuluk5.jpg"><h3>MODEL 05</h3></div>
+            <div class="kart"><img src="korkuluk6.jpg"><h3>MODEL 06</h3></div>
+            <div class="kart"><img src="korkuluk7.jpg"><h3>MODEL 07</h3></div>
+            <div class="kart"><img src="korkuluk8.jpg"><h3>MODEL 08</h3></div>
+            <div class="kart"><img src="korkuluk9.jpg"><h3>MODEL 09</h3></div>
+        </div>
+    </div>
 
-<footer>
-    <p>© 2026 CEM AS MİMARİ - Tüm Hakları Saklıdır.</p>
-    <a href="https://wa.me/905000000000" class="whatsapp-btn">Hemen Fiyat Al (WhatsApp)</a>
-</footer>
+    <div id="dusakabin" class="bolum">
+        <div class="izgara">
+            <div class="kart"><img src="dusakabin1.jpg"><h3>MODEL 01</h3></div>
+            <div class="kart"><img src="dusakabin2.jpg"><h3>MODEL 02</h3></div>
+            <div class="kart"><img src="dusakabin3.jpg"><h3>MODEL 03</h3></div>
+            <div class="kart"><img src="dusakabin4.jpg"><h3>MODEL 04</h3></div>
+            <div class="kart"><img src="dusakabin5.jpg"><h3>MODEL 05</h3></div>
+            <div class="kart"><img src="dusakabin6.jpg"><h3>MODEL 06</h3></div>
+        </div>
+    </div>
 
-<script>
-    // --- SLIDER SİSTEMİ ---
-    let slideIndex = 1;
-    showSlides(slideIndex);
+    <div id="pvc" class="bolum">
+        <div class="izgara">
+            <div class="kart"><img src="pvc1.jpg"><h3>MODEL 01</h3></div>
+            <div class="kart"><img src="pvc2.jpg"><h3>MODEL 02</h3></div>
+            <div class="kart"><img src="pvc3.jpg"><h3>MODEL 03</h3></div>
+            <div class="kart"><img src="pvc4.jpg"><h3>MODEL 04</h3></div>
+            <div class="kart"><img src="pvc5.jpg"><h3>MODEL 05</h3></div>
+            <div class="kart"><img src="pvc6.jpg"><h3>MODEL 06</h3></div>
+            <div class="kart"><img src="pvc7.jpg"><h3>MODEL 07</h3></div>
+        </div>
+    </div>
 
-    function plusSlides(n) { showSlides(slideIndex += n); }
-    function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("slides");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
-        slides[slideIndex-1].style.display = "block";
-    }
+    <footer>CEM_AS MİMARİ SİSTEMLER - 2026</footer>
 
-    // --- FİLTRELEME SİSTEMİ ---
-    function filterGallery(category) {
-        let items = document.getElementsByClassName("gallery-item");
-        for (let i = 0; i < items.length; i++) {
-            if (category === 'hepsi') {
-                items[i].classList.add("active");
-            } else {
-                if (items[i].classList.contains(category)) {
-                    items[i].classList.add("active");
-                } else {
-                    items[i].classList.remove("active");
-                }
-            }
+    <script>
+        // SEKME GEÇİŞLERİ
+        function sekmeAc(id, el) {
+            document.querySelectorAll('.bolum').forEach(b => b.classList.remove('aktif'));
+            document.querySelectorAll('.m-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('aktif');
+            el.classList.add('active');
         }
-    }
 
-    // Otomatik kayma (5 saniyede bir)
-    setInterval(function() { plusSlides(1); }, 5000);
-</script>
+        // NANO BANANA MOTORU
+        const ekran = document.getElementById('nano-ekran');
+        const model = document.getElementById('tasinan-model');
+        
+        function nanoBaslat(e) {
+            const okuyucu = new FileReader();
+            okuyucu.onload = function(ev) {
+                document.getElementById('musteri-resmi').src = ev.target.result;
+                ekran.style.display = 'flex';
+            }
+            okuyucu.readAsDataURL(e.target.files[0]);
+        }
 
+        function nanoKapat() { ekran.style.display = 'none'; }
+        function modelDegis(src) { model.src = src; }
+        function modelBoyut(v) { model.style.width = v + 'px'; }
+
+        // SÜRÜKLE BIRAK SİSTEMİ
+        let hareket = false, sX, sY, bL, bT;
+        const basla = (e) => {
+            hareket = true;
+            const ev = e.type.includes('touch') ? e.touches[0] : e;
+            sX = ev.clientX; sY = ev.clientY;
+            bL = model.offsetLeft; bT = model.offsetTop;
+        };
+        const surukle = (e) => {
+            if(!hareket) return;
+            const ev = e.type.includes('touch') ? e.touches[0] : e;
+            model.style.left = (bL + (ev.clientX - sX)) + 'px';
+            model.style.top = (bT + (ev.clientY - sY)) + 'px';
+        };
+        model.addEventListener('mousedown', basla);
+        model.addEventListener('touchstart', basla);
+        window.addEventListener('mousemove', surukle);
+        window.addEventListener('touchmove', surukle, {passive:false});
+        window.addEventListener('mouseup', () => hareket = false);
+        window.addEventListener('touchend', () => hareket = false);
+    </script>
 </body>
 </html>
