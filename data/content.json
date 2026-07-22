@@ -1,0 +1,30 @@
+{
+  "korkuluk": [
+    {"image": "korkuluk1.jpg", "title": "MODEL 01"},
+    {"image": "korkuluk2.jpg", "title": "MODEL 02"},
+    {"image": "korkuluk3.jpg", "title": "MODEL 03"},
+    {"image": "korkuluk4.jpg", "title": "MODEL 04"},
+    {"image": "korkuluk5.jpg", "title": "MODEL 05"},
+    {"image": "korkuluk6.jpg", "title": "MODEL 06"},
+    {"image": "korkuluk7.jpg", "title": "MODEL 07"},
+    {"image": "korkuluk8.jpg", "title": "MODEL 08"},
+    {"image": "korkuluk9.jpg", "title": "MODEL 09"}
+  ],
+  "dusakabin": [
+    {"image": "dusakabin1.jpg", "title": "MODEL 01"},
+    {"image": "dusakabin2.jpg", "title": "MODEL 02"},
+    {"image": "dusakabin3.jpg", "title": "MODEL 03"},
+    {"image": "dusakabin4.jpg", "title": "MODEL 04"},
+    {"image": "dusakabin5.jpg", "title": "MODEL 05"},
+    {"image": "dusakabin6.jpg", "title": "MODEL 06"}
+  ],
+  "pvc": [
+    {"image": "pvc1.jpg", "title": "MODEL 01"},
+    {"image": "pvc2.jpg", "title": "MODEL 02"},
+    {"image": "pvc3.jpg", "title": "MODEL 03"},
+    {"image": "pvc4.jpg", "title": "MODEL 04"},
+    {"image": "pvc5.jpg", "title": "MODEL 05"},
+    {"image": "pvc6.jpg", "title": "MODEL 06"},
+    {"image": "pvc7.jpg", "title": "MODEL 07"}
+  ]
+}

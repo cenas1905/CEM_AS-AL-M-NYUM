@@ -103,45 +103,46 @@
     </div>
 
     <div id="korkuluk" class="bolum aktif">
-        <div class="izgara">
-            <div class="kart"><img src="korkuluk1.jpg"><h3>MODEL 01</h3></div>
-            <div class="kart"><img src="korkuluk2.jpg"><h3>MODEL 02</h3></div>
-            <div class="kart"><img src="korkuluk3.jpg"><h3>MODEL 03</h3></div>
-            <div class="kart"><img src="korkuluk4.jpg"><h3>MODEL 04</h3></div>
-            <div class="kart"><img src="korkuluk5.jpg"><h3>MODEL 05</h3></div>
-            <div class="kart"><img src="korkuluk6.jpg"><h3>MODEL 06</h3></div>
-            <div class="kart"><img src="korkuluk7.jpg"><h3>MODEL 07</h3></div>
-            <div class="kart"><img src="korkuluk8.jpg"><h3>MODEL 08</h3></div>
-            <div class="kart"><img src="korkuluk9.jpg"><h3>MODEL 09</h3></div>
+        <div class="izgara" id="korkuluk-izgara">
+            <!-- Veriler JS ile yüklenecek -->
         </div>
     </div>
 
     <div id="dusakabin" class="bolum">
-        <div class="izgara">
-            <div class="kart"><img src="dusakabin1.jpg"><h3>MODEL 01</h3></div>
-            <div class="kart"><img src="dusakabin2.jpg"><h3>MODEL 02</h3></div>
-            <div class="kart"><img src="dusakabin3.jpg"><h3>MODEL 03</h3></div>
-            <div class="kart"><img src="dusakabin4.jpg"><h3>MODEL 04</h3></div>
-            <div class="kart"><img src="dusakabin5.jpg"><h3>MODEL 05</h3></div>
-            <div class="kart"><img src="dusakabin6.jpg"><h3>MODEL 06</h3></div>
+        <div class="izgara" id="dusakabin-izgara">
+             <!-- Veriler JS ile yüklenecek -->
         </div>
     </div>
 
     <div id="pvc" class="bolum">
-        <div class="izgara">
-            <div class="kart"><img src="pvc1.jpg"><h3>MODEL 01</h3></div>
-            <div class="kart"><img src="pvc2.jpg"><h3>MODEL 02</h3></div>
-            <div class="kart"><img src="pvc3.jpg"><h3>MODEL 03</h3></div>
-            <div class="kart"><img src="pvc4.jpg"><h3>MODEL 04</h3></div>
-            <div class="kart"><img src="pvc5.jpg"><h3>MODEL 05</h3></div>
-            <div class="kart"><img src="pvc6.jpg"><h3>MODEL 06</h3></div>
-            <div class="kart"><img src="pvc7.jpg"><h3>MODEL 07</h3></div>
+        <div class="izgara" id="pvc-izgara">
+             <!-- Veriler JS ile yüklenecek -->
         </div>
     </div>
 
     <footer>CEM_AS MİMARİ SİSTEMLER - 2026</footer>
 
     <script>
+        // İÇERİK YÜKLEME
+        fetch('data/content.json')
+            .then(res => res.json())
+            .then(data => {
+                const render = (id, items) => {
+                    const el = document.getElementById(id);
+                    if (el && items) {
+                        el.innerHTML = items.map(item => `
+                            <div class="kart">
+                                <img src="${item.image.replace('websitem/', '')}" onerror="this.src='${item.image}'">
+                                <h3>${item.title}</h3>
+                            </div>
+                        `).join('');
+                    }
+                };
+                render('korkuluk-izgara', data.korkuluk);
+                render('dusakabin-izgara', data.dusakabin);
+                render('pvc-izgara', data.pvc);
+            });
+
         // SEKME GEÇİŞLERİ
         function sekmeAc(id, el) {
             document.querySelectorAll('.bolum').forEach(b => b.classList.remove('aktif'));

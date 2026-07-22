@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: cenas1905/CEM_AS-AL-M-NYUM
+  branch: main
+
+media_folder: ""
+public_folder: ""
+
+collections:
+  - name: "icerik"
+    label: "Web Sitesi İçeriği"
+    files:
+      - label: "Site Verileri"
+        name: "site_data"
+        file: "data/content.json"
+        fields:
+          - {label: "Korkuluk Resimleri", name: "korkuluk", widget: "list", fields: [{label: "Resim", name: "image", widget: "image"}, {label: "Başlık", name: "title", widget: "string"}]}
+          - {label: "Duşakabin Resimleri", name: "dusakabin", widget: "list", fields: [{label: "Resim", name: "image", widget: "image"}, {label: "Başlık", name: "title", widget: "string"}]}
+          - {label: "PVC & Cam Resimleri", name: "pvc", widget: "list", fields: [{label: "Resim", name: "image", widget: "image"}, {label: "Başlık", name: "title", widget: "string"}]}
